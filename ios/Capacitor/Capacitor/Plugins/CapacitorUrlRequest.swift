@@ -116,27 +116,23 @@ open class CapacitorUrlRequest: NSObject, URLSessionTaskDelegate {
             let key = item["key"]
             let value = item["value"]!
 
-            if type == "base64File" {
+            if type == "base64File" 
+            {
                 let fileName = item["fileName"]
                 let fileContentType = item["contentType"]
-
                 data.append("\r\n--\(boundary)\r\n".data(using: .utf8)!)
                 data.append("Content-Disposition: form-data; name=\"\(key!)\"; filename=\"\(fileName!)\"\r\n".data(using: .utf8)!)
                 data.append("Content-Type: \(fileContentType!)\r\n".data(using: .utf8)!)
                 data.append("Content-Transfer-Encoding: binary\r\n".data(using: .utf8)!)
                 data.append("\r\n".data(using: .utf8)!)
-
                 data.append(Data(base64Encoded: value)!)
-
-                data.append("\r\n".data(using: .utf8)!)
-            } else if type == "string" {
+            }
+            else if type == "string" {
                 data.append("\r\n--\(boundary)\r\n".data(using: .utf8)!)
                 data.append("Content-Disposition: form-data; name=\"\(key!)\"\r\n".data(using: .utf8)!)
                 data.append("\r\n".data(using: .utf8)!)
                 data.append(value.data(using: .utf8)!)
-                data.append("\r\n".data(using: .utf8)!)
             }
-
         }
 
         data.append("\r\n--\(boundary)--\r\n".data(using: .utf8)!)
